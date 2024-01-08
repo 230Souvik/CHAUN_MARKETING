@@ -1,0 +1,70 @@
+import java.util.Scanner;
+
+public class ChainMarketingCommission {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input the number of parents
+        System.out.print("Enter the number of parents: ");
+        int numParents = scanner.nextInt();
+        scanner.nextLine(); // consume the newline
+
+        // Arrays to store parent names and their corresponding child names
+        String[] parentNames = new String[numParents];
+        String[][] childNames = new String[numParents][2];
+
+        // Input parent names and their child names
+        for (int i = 0; i < numParents; i++) {
+            System.out.print("Enter parent name: ");
+            parentNames[i] = scanner.nextLine();
+
+            for (int j = 0; j < 2; j++) {
+                System.out.print("Enter child name for " + parentNames[i] + " (enter 'N' for no child): ");
+                String childName = scanner.nextLine();
+                childNames[i][j] = childName.equalsIgnoreCase("N") ? null : childName;
+            }
+        }
+
+        // Fixed amount for joining the scheme
+        int schemeAmount = 5000;
+
+        // Commission rates
+        double parentCommissionRate = 0.10;
+        double childCommissionRate = 0.05;
+
+        // Calculate and display total commission for each member
+        for (int i = 0; i < numParents; i++) {
+            String parent = parentNames[i];
+            String[] children = childNames[i];
+
+            System.out.println("Parent member: " + parent);
+
+            // Calculate total commission for the parent
+            // double parentCommission = (children[0] != null || children[1] != null)
+            //         ? parentCommissionRate * schemeAmount
+            //         : childCommissionRate * schemeAmount;
+                    
+                    double parentCommission =-1;
+                    if(children[0] != null && children[1] != null)
+                     parentCommission =2*parentCommissionRate * schemeAmount;
+                     else if(children[0] != null || children[1] != null)
+                     parentCommission =parentCommissionRate * schemeAmount;
+                    else
+                    parentCommission =childCommissionRate * schemeAmount;
+
+            System.out.println("Total commission for " + parent + ": Rs. " + parentCommission);
+
+            // Calculate and display total commission for each child
+            for (String child : children) {
+                if (child != null) {
+                    System.out.println("Child member: " + child);
+                    double childCommission = childCommissionRate * schemeAmount;
+                    System.out.println("Total commission for " + child + ": Rs. " + childCommission);
+                }
+            }
+        }
+
+        scanner.close();
+    }
+}
